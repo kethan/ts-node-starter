@@ -1,0 +1,54 @@
+{
+  "name": "ts-node-starter",
+  "version": "0.0.0",
+  "main": "dist/app.js",
+  "scripts": {
+    "lint": "eslint src --ext .ts --ignore-pattern node_modules/",
+    "clean": "del-cli dist logs",
+    "copy": "cp-cli config/ dist/config",
+    "build": "npm run lint && npm run test && npm run clean && tsc && npm run copy",
+    "prettier-format": "run-script-os",
+    "prettier-format:win32": "prettier \"./src/**/*.ts\" --write",
+    "prettier-format:darwin:linux": "prettier 'src/**/*.ts' --write",
+    "prettier-format:default": "prettier 'src/**/*.ts' --write",
+    "prettier-watch": "run-script-os",
+    "prettier-watch:win32": "onchange \"src/**/*.ts\" -- prettier --write {{changed}}",
+    "prettier-watch:darwin:linux": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "prettier-watch:default": "onchange 'src/**/*.ts' -- prettier --write {{changed}}",
+    "dev": "ts-node-dev --respawn --transpile-only --quiet src/app.ts",
+    "start:dev": "npm-run-all -p prettier-watch dev",
+    "start:prod": "npm run build && cross-env NODE_ENV=production node dist/app.js",
+    "start:staging": "npm run build && cross-env NODE_ENV=staging node dist/app.js",
+    "test": "jest",
+    "test:dev": "jest --watchAll"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test && npm run prettier-format && npm run lint"
+    }
+  },
+  "devDependencies": {
+    "@types/config": "0.0.38",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "cp-cli": "^2.0.0",
+    "cross-env": "^7.0.3",
+    "del-cli": "^4.0.0",
+    "eslint": "^7.29.0",
+    "husky": "^6.0.0",
+    "jest": "^27.0.5",
+    "npm-run-all": "^4.1.5",
+    "onchange": "^7.1.0",
+    "prettier": "^2.3.1",
+    "run-script-os": "^1.1.6",
+    "ts-jest": "^27.0.3",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.3.4"
+  },
+  "dependencies": {
+    "config": "^3.3.6",
+    "winston": "^3.3.3"
+  }
+}
