@@ -18,7 +18,7 @@ const options = {
         format: winston.format.combine(
             winston.format.colorize(),
             combineMessageAndSplat(),
-            winston.format.splat(),
+            winston.format.simple(),
             winston.format.timestamp(),
             winston.format.prettyPrint(),
             winston.format.printf(
@@ -26,8 +26,9 @@ const options = {
             ))
     },
     verbose: {
-        format: winston.format.combine(combineMessageAndSplat(),
-            winston.format.splat(),
+        format: winston.format.combine(
+            combineMessageAndSplat(),
+            winston.format.simple(),
             winston.format.timestamp(),
             winston.format.prettyPrint(),
             winston.format.printf(
